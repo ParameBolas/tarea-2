@@ -1,0 +1,68 @@
+#include <iostream>
+
+int main() {
+    double presupuestoAsignado[22] = {0.0};
+    double presupuestoEjecutado[22] = {0.0};
+    char nombreMunicipio[50]; 
+    char nombreEstado[50]; 
+    int opcion;
+    do {
+        printf("Menu de opciones:\n");
+        printf("1. Ingresar datos de presupuesto ejecutado\n");
+        printf("2. Salir\n");
+        printf("selecione una opcion porfavor: ");
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1: {
+                for (int i = 0; i < 22; i++) {                    
+                    printf("Ingrese el nombre del estado: ");
+                    scanf("%s", nombreEstado);
+                
+                    double montoAsignadoEstado = 0.0;
+                    double montoEjecutadoEstado = 0.0;
+
+                    int numMunicipios;
+                    printf("Ingrese el número de municipios en %s: ", nombreEstado);
+                    scanf("%d", &numMunicipios);
+
+                    for (int j = 0; j < numMunicipios; j++) {
+                        printf("Ingrese el nombre del municipio: ");
+                        scanf("%s", nombreMunicipio);
+
+                        double montoPresupuesto;
+                        printf("Ingrese el monto del presupuesto para %s: ", nombreMunicipio);
+                        scanf("%lf", &montoPresupuesto);
+
+                        double montoEjecutado;
+                        printf("Ingrese el monto ejecutado por %s al año: ", nombreMunicipio);
+                        scanf("%lf", &montoEjecutado);
+
+                        montoAsignadoEstado += montoPresupuesto;
+                        montoEjecutadoEstado += montoEjecutado;
+                    }
+
+                    presupuestoAsignado[i] = montoAsignadoEstado;
+                    presupuestoEjecutado[i] = montoEjecutadoEstado;
+
+                    if (montoEjecutadoEstado > montoAsignadoEstado) {
+                        printf("El alcalde del municipio %s del estado %s ha sido arrestado por gastar más de lo presupuestado\n", nombreMunicipio, nombreEstado);
+                    } else if (montoEjecutadoEstado < montoAsignadoEstado) {
+                        double montoDevuelto = montoAsignadoEstado - montoEjecutadoEstado;
+                        printf("El municipio %s devuelve al ejecutivo un presupuesto, por no haberlo ejecutado: %.2f\n", nombreEstado, montoDevuelto);
+                    }
+                }
+                break;
+            }
+            case 2: {
+
+                printf("Saliendo del programa...\n");
+                break;
+            }
+            default:
+                printf("Opción inválida, por favor ingrese una opción válida.\n");
+        }
+    } while (opcion != 3);
+
+    return 0;
+}
